@@ -42,7 +42,7 @@ public class HomeController : Controller
     {
         _context = this.ControllerContext.RouteData;
 
-        var token = HttpContext.Session.GetString("Token");
+        var token = "asdasd";//HttpContext.Session.GetString("Token");
         if (string.IsNullOrEmpty(token))
         {
             // _logger.LogInformation(_logUtil.Info(GetType().FullName, _context.Values[ActionName.ACTION].ToString(), "Session expired"));

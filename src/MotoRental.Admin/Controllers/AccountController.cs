@@ -56,7 +56,7 @@ public class AccountController : Controller
              string message = "Login Realizado com Sucesso!";
 
             // _logger.LogInformation(_logUtil.Succes(GetType().FullName, _context.Values[ActionName.ACTION].ToString(), $"{message} -> {login.Email}"));
-            return Json(new { status = true, message = message });
+            return View();//Json(new { status = true, message = message });
 
         }
         catch (Exception e)

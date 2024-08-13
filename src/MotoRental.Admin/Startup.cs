@@ -45,7 +45,7 @@ public class Startup
 
         services.AddMvc();
         services.AddMemoryCache();
-        // services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         #region Dependency Injection
 

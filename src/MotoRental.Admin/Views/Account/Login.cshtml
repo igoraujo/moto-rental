@@ -103,6 +103,7 @@
                         alert("Temos um problema, Tente novamente!");
                     },
                     success: function (result) {
+                        console.log('aqui');
                         console.log(result);
                         if (result.status == true) {
                             window.location.href = '@Url.Action("Index", "Home")';
