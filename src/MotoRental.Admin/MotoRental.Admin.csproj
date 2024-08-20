@@ -6,4 +6,24 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MotoRental.Borders\MotoRental.Borders.csproj" />
+    <ProjectReference Include="..\MotoRental.UseCases\MotoRental.UseCases.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Views\Motorcycle\Create.cshtml" />
+    <AdditionalFiles Include="Views\Motorcycle\Index.cshtml" />
+    <AdditionalFiles Include="Views\Motorcycle\Update.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Rental\Create.cshtml" />
+  </ItemGroup>
+
 </Project>

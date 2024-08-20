@@ -1,18 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MotoRental.Borders.Models;
+using MotoRental.Repositories.Base;
+using MotoRental.Repositories.Motocycles;
+using MotoRental.Repositories.Products;
+using MotoRental.Repositories.Rentals;
+using MotoRental.UseCases.Motocycles;
+using MotoRental.UseCases.Products;
+using MotoRental.UseCases.Rentals;
 
 namespace MotoRental.Admin;
 
-public class Startup
+public class Startup(IConfiguration configuration)
 {
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
+    public IConfiguration Configuration { get; } = configuration;
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
@@ -54,26 +53,19 @@ public class Startup
         // services.AddScoped<ISessionRepository, SessionRepository>();
         // services.AddScoped<IUserUseCase, UserUseCase>();
         // services.AddScoped<IUserRepository, UserRepository>();
-        // services.AddScoped<IDriverUseCase, DriverUseCase>();
-        // services.AddScoped<IDriverRepository, DriverRepository>();
-        // services.AddScoped<IDeviceUseCase, DeviceUseCase>();
-        // services.AddScoped<IDeviceRepository, DeviceRepository>();
-        // services.AddScoped<IGroupUseCase, GroupUseCase>();
-        // services.AddScoped<IGroupRepository, GroupRepository>();
-        // services.AddScoped<IPositionUseCase, PositionUseCase>();
-        // services.AddScoped<IPositionRepository, PositionRepository>();
-        // services.AddScoped<IBaseReportUseCase<ReportSummary>, ReportSummaryUseCase>();
-        // services.AddScoped<IBaseReportRepository<ReportSummary>, BaseReportRepository<ReportSummary>>();
-        // services.AddScoped<IBaseReportUseCase<ReportRoute>, ReportRouteUseCase>();
-        // services.AddScoped<IBaseReportRepository<ReportRoute>, BaseReportRepository<ReportRoute>>();
-        // services.AddScoped<IBaseReportUseCase<ReportEvent>, ReportEventUseCase>();
-        // services.AddScoped<IBaseReportRepository<ReportEvent>, BaseReportRepository<ReportEvent>>();
-        // services.AddScoped<IGeoferenceUseCase, GeoferenceUseCase>();
-        // services.AddScoped<IGeoferenceRepository, GeoferenceRepository>();
-        // services.AddScoped<IMaintenanceUseCase, MaintenanceUseCase>();
-        // services.AddScoped<IMaintenanceRepository, MaintenanceRepository>();
 
         // services.AddScoped<ISessionUtil, SessionUtil>();
+        services.AddScoped<IMotorcycleUseCase, MotorcycleUseCase>();
+        services.AddScoped<IBaseRepository<Motorcycle>, MotorcycleRepository>();
+        
+        services.AddScoped<IRentalRepository, RentalRepository>();
+        services.AddScoped<IRentalUseCase, RentalUseCase>();
+        
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IProductUseCase, ProductUseCase>();
+
+        // services.AddScoped<IBaseRepository<>, BaseRepository<>();
+        
         // services.AddScoped<ILogUtil, LogUtil>();
 
         // services.AddSingleton<IAppConfiguration, AppConfiguration>();

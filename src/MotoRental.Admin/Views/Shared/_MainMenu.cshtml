@@ -1,5 +1,3 @@
-@using System
-@using Microsoft.AspNetCore.Http
 @* @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor *@
 
 @{
@@ -15,14 +13,14 @@
     @if (!deviceReadonly)
     {
         <li class="treeview">
-            <a href="#"><i class="fa fa-users"></i> <span>Usuários</span>
+            <a href="#"><i class="fa fa-users"></i> <span>Aluguéis</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="/Users/Create">Cadastrar Usuário</a></li>
-                <li><a href="/Users">Todos Usuários</a></li>
+                <li><a href="/Rental/Create">Cadastrar Aluguel</a></li>
+                <li><a href="/Rental">Todos Aluguéis</a></li>
             </ul>
         </li>
     }
@@ -43,7 +41,7 @@
     </li>
 
     <li class="treeview">
-        <a href="#"><i class="fa fa-car"></i> <span>Dispositivos</span>
+        <a href="#"><i class="fa fa-car"></i> <span>Motos</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -51,22 +49,22 @@
         <ul class="treeview-menu">
             @if (!deviceReadonly)
             {
-                <li><a href="/Devices/Create">Cadastrar Dispositivos</a></li>
+                <li><a href="/Motorcycle/Create">Cadastrar Moto</a></li>
             }
-            <li><a href="/Devices">Todos Dispositivos</a></li>
+            <li><a href="/Motorcycle">Todas Motos</a></li>
         </ul>
     </li>
     @if (!deviceReadonly)
     {
         <li class="treeview">
-            <a href="#"><i class="fa fa-building"></i> <span>Clientes</span>
+            <a href="#"><i class="fa fa-building"></i> <span>Produtos</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="/Groups/Create">Cadastrar Clientes</a></li>
-                <li><a href="/Groups">Todos Clientes</a></li>
+                <li><a href="/Product/Create">Cadastrar Produto</a></li>
+                <li><a href="/Product">Todos Produtos</a></li>
             </ul>
         </li>
     }

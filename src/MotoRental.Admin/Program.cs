@@ -1,7 +1,4 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-
-namespace MotoRental.Admin.Controllers;
+namespace MotoRental.Admin;
 
 public class Program
 {

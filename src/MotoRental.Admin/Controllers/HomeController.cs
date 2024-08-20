@@ -1,10 +1,4 @@
-﻿// using Aisoftware.Tracker.UseCases.Devices.UseCases;
-// using Aisoftware.Tracker.UseCases.Groups.UseCases;
-// using Aisoftware.Tracker.UseCases.Positions.UseCases;
-// using Aisoftware.Tracker.Borders.Constants;
-// using Aisoftware.Tracker.Borders.Services;
-// using Aisoftware.Tracker.Borders.ViewModels;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
