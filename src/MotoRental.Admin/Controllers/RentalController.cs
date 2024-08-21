@@ -5,6 +5,7 @@ using MotoRental.Borders.Constants;
 using MotoRental.Borders.Models;
 using MotoRental.UseCases.Products;
 using MotoRental.UseCases.Rentals;
+using System.Reflection;
 
 namespace MotoRental.Admin.Controllers;
 
@@ -67,6 +68,7 @@ public class RentalController : Controller
     }
 
     // [Authorize(Roles = Roles.ADMIN)]
+    [Route("Rental/Create/{productId}")]
     public async Task<ActionResult> Create(int productId)
     {
         //cache
@@ -74,16 +76,21 @@ public class RentalController : Controller
         {
             Id = 1
         };
+        var products = await _productUseCase.FindAll();
+        var product = products?.First(p => p.Id == productId);
 
         var view = new RentalViewModel
         {
-            Products = await _productUseCase.FindAll(),
+            Products = products,
+            Product = product,
             Rental = new Rental
             {
                 DeliveryPersonId = deliveryPerson.Id,
                 LicenseType = nameof(deliveryPerson.LicenseType),
-                ProductId = productId
-            }
+                ProductId = productId,
+                ExpectedEndDate = DateTime.Now.AddDays(product.NumberOfDays)
+            },
+            Total = product.PricePerDay * product.NumberOfDays
         };
         
         return View(view);
