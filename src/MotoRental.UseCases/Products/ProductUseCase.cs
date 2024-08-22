@@ -12,6 +12,18 @@ public class ProductUseCase(IProductRepository repository) : BaseUseCase<Product
         {
             new()
             {
+                Id = 0,
+                CreatedAt = DateTime.Now,
+                Description = "50 dias com um custo de R$18,00 por dia",
+                IsLateFee = true,
+                LateFee = 40,
+                IsPercent = true,
+                NumberOfDays = 7,
+                PricePerDay = 18M,
+                Active = true
+            },
+            new()
+            {
                 Id = 1,
                 CreatedAt = DateTime.Now,
                 Description = "7 dias com um custo de R$30,00 por dia",

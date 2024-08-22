@@ -71,10 +71,13 @@ public class RentalController : Controller
     [Route("Rental/Create/{productId}")]
     public async Task<ActionResult> Create(int productId)
     {
+        _context = ControllerContext.RouteData;
+        ViewBag.ControllerName = _context.Values[ActionName.CONTROLLER];
         //cache
         var deliveryPerson = new DeliveryPerson
         {
-            Id = 1
+            Id = 1,
+            LicenseType = LicenseType.A
         };
         var products = await _productUseCase.FindAll();
         var product = products?.First(p => p.Id == productId);
@@ -83,13 +86,7 @@ public class RentalController : Controller
         {
             Products = products,
             Product = product,
-            Rental = new Rental
-            {
-                DeliveryPersonId = deliveryPerson.Id,
-                LicenseType = nameof(deliveryPerson.LicenseType),
-                ProductId = productId,
-                ExpectedEndDate = DateTime.Now.AddDays(product.NumberOfDays)
-            },
+            ExpectedEndDate = DateTime.Now.AddDays(product.NumberOfDays),
             Total = product.PricePerDay * product.NumberOfDays
         };
         
@@ -97,15 +94,20 @@ public class RentalController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = Roles.ADMIN)]
-    public async Task<ActionResult> CreateRequest(Rental request)
+    // [Authorize(Roles = Roles.ADMIN)]
+    public async Task<ActionResult> CreateRental(RentalViewModel request)
     {
         _context = ControllerContext.RouteData;
         ViewBag.ControllerName = _context.Values[ActionName.CONTROLLER];
 
         try
         {
-            await _rentalUseCase.Save(request);
+            var deliveryPerson = new DeliveryPerson
+            {
+                Id = 1,
+                LicenseType = LicenseType.A
+            };
+            await _rentalUseCase.Save(request.Product, deliveryPerson);
 
             // _logger.LogInformation(_logUtil.Succes(GetType().FullName, _context.Values[ActionName.ACTION].ToString()));
         }

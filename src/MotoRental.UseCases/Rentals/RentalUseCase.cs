@@ -29,16 +29,18 @@ public class RentalUseCase(IRentalRepository repository) : BaseUseCase<Rental>(r
         }
         
         decimal totalPrice = product.NumberOfDays * product.PricePerDay;
+        DateTime endDate = date.AddDays(product.NumberOfDays);
         
         var rental = new Rental
         {
             CreatedAt = DateTime.Now,
             StartDate = date,
-            EndDate = date.AddDays(product.NumberOfDays),
+            EndDate = endDate,
             TotalValue = totalPrice,
             LicenseType = nameof(deliveryPerson.LicenseType),
             ProductId = product.Id,
-            DeliveryPersonId = deliveryPerson.Id
+            DeliveryPersonId = deliveryPerson.Id,
+            ExpectedEndDate = endDate
         };
 
         return await repository.Save(rental);

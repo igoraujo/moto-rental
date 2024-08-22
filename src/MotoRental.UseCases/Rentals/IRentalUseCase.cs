@@ -7,4 +7,5 @@ namespace MotoRental.UseCases.Rentals;
 public interface IRentalUseCase : IBaseUseCase<Rental>
 {
     Task<IEnumerable<Rental>?> FindByDeliveryPersonId(int id);
+    Task<int> Save(Product product, DeliveryPerson deliveryPerson);
 }
