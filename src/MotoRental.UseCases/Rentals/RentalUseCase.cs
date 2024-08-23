@@ -29,14 +29,14 @@ public class RentalUseCase(IRentalRepository repository) : BaseUseCase<Rental>(r
         }
         
         decimal totalPrice = product.NumberOfDays * product.PricePerDay;
-        DateTime endDate = date.AddDays(product.NumberOfDays);
+        var endDate = date.AddDays(product.NumberOfDays);
         
         var rental = new Rental
         {
             CreatedAt = DateTime.Now,
             StartDate = date,
             EndDate = endDate,
-            TotalValue = totalPrice,
+            Total = totalPrice,
             LicenseType = nameof(deliveryPerson.LicenseType),
             ProductId = product.Id,
             DeliveryPersonId = deliveryPerson.Id,
