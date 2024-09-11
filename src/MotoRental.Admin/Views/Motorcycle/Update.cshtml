@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Dispositivos/Veículos
+        @ViewBag.Title
     </h1>
 </section>
 <!-- Main content -->
@@ -11,7 +11,7 @@
     <!-- Horizontal Form -->
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Editar Dispositivos</h3>
+            <h3 class="box-title">Editar @ViewBag.Title</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -34,17 +34,41 @@
                     <div class="col-sm-4">
                         <input id="Model" type="text" class="form-control" name="Model" placeholder="Honda CG 150 cc" maxlength="100" value="@Model?.Model">
                     </div>
+                    <div class="col-sm-4">
+                        <label for="checkActive" class="col-sm-2 control-label">Ativo</label>
+                        <input id="checkActive" type="checkbox" class="custom-control-input" name="checkActive">
+                    </div>
                 </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
                 <button type="submit" class="btn btn-default" formaction="/@ViewBag.ControllerName/Cancel"
                         formmethod="post">Voltar</button>
-                <button type="submit" class="btn btn-info pull-right" formaction="/@ViewBag.ControllerName/UpdateDevice"
+                <button type="submit" class="btn btn-info pull-right" formaction="/@ViewBag.ControllerName/UpdateMotorcycle"
                         formmethod="post">Editar</button>
             </div>
             <!-- /.box-footer -->
+            <input type="hidden" id="Id" name="Id" value="@Model?.Id" />
+            <input type="hidden" id="Active" name="Active">
         </form>
     </div>
     <!-- /.box -->
+    <script>
+        $(document).ready(function () {
+            setCheckbox();
+        });
+        
+        $("#checkActive").click(function () {
+            setCheckbox("Active");
+        });
+
+        function setCheckbox(value) {
+            var isChecked = $(`input:checkbox[name=check${value}]`).is(':checked');
+            if (isChecked) {
+                $(`#${value}`).val(true);
+            } else {
+                $(`#${value}`).val(false);
+            }
+        }
+    </script>
 </section>

@@ -24,7 +24,7 @@ public class MotorcycleController : Controller
         IEnumerable<Motorcycle>? response = new List<Motorcycle>();
 
         _context = ControllerContext.RouteData;
-        ViewBag.ControllerName = _context.Values[ActionName.CONTROLLER];
+        ViewBag.ControllerName = _context.Values[ActionName.CONTROLLER] ?? throw new InvalidOperationException();
 
         try
         {
@@ -46,14 +46,15 @@ public class MotorcycleController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = Roles.ADMIN)]
-    public async Task<ActionResult> CreateDevice(Motorcycle request)
+    // [Authorize(Roles = Roles.ADMIN)]
+    public async Task<ActionResult> CreateMotorcycle(Motorcycle request)
     {
         _context = ControllerContext.RouteData;
-        ViewBag.ControllerName = _context.Values[ActionName.CONTROLLER];
+        ViewBag.ControllerName = _context.Values[ActionName.CONTROLLER] ?? throw new InvalidOperationException();
 
         try
         {
+            request.CreatedAt = DateTime.Now;
             await _useCase.Save(request);
 
             // _logger.LogInformation(_logUtil.Succes(GetType().FullName, _context.Values[ActionName.ACTION].ToString()));
@@ -74,27 +75,30 @@ public class MotorcycleController : Controller
     public async Task<ActionResult> Delete(int id)
     {
         _context = ControllerContext.RouteData;
-
+        ViewBag.ControllerName = _context.Values[ActionName.CONTROLLER] ?? throw new InvalidOperationException();
+        
         try
         {
-            var response = await _useCase.Delete(new Motorcycle{Id = id});
+            var response = await _useCase.Delete(new Motorcycle { Id = id });
             // _logger.LogInformation(_logUtil.Succes(GetType().FullName, _context.Values[ActionName.ACTION].ToString()));
-            return RedirectToAction(ActionName.INDEX, ViewBag.ControllerName);
         }
         catch (Exception e)
         {
             // _logger.LogError(_logUtil.Error(GetType().FullName, _context.Values[ActionName.ACTION].ToString(), e));
             return View("Error");
         }
+
+        return RedirectToAction(ActionName.INDEX, ViewBag.ControllerName);
+
     }
 
     // [Authorize(Roles = Roles.ADMIN)]
     public async Task<ActionResult> Update(int id)
     {
         _context = ControllerContext.RouteData;
-        ViewBag.ControllerName = _context.Values[ActionName.CONTROLLER];
+        ViewBag.ControllerName = _context.Values[ActionName.CONTROLLER] ?? throw new InvalidOperationException();
 
-        Motorcycle response = null;
+        Motorcycle? response = null;
 
         try
         {
@@ -112,13 +116,14 @@ public class MotorcycleController : Controller
 
     [HttpPost]
     // [Authorize(Roles = Roles.ADMIN)]
-    public async Task<ActionResult> UpdateDevice(Motorcycle request)
+    public async Task<ActionResult> UpdateMotorcycle(Motorcycle request)
     {
-        _context = this.ControllerContext.RouteData;
-        ViewBag.ControllerName = _context.Values[ActionName.CONTROLLER];
+        _context = ControllerContext.RouteData;
+        ViewBag.ControllerName = _context.Values[ActionName.CONTROLLER] ?? throw new InvalidOperationException();
 
         try
         {
+            request.UpdatedAt = DateTime.Now;
             var response = await _useCase.Update(request);
 
             // _logger.LogInformation(_logUtil.Succes(GetType().FullName, _context.Values[ActionName.ACTION].ToString()));

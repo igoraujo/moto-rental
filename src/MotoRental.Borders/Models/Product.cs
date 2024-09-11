@@ -2,6 +2,7 @@ using Dapper.Contrib.Extensions;
 
 namespace MotoRental.Borders.Models;
 
+[Table ("product")]
 public class Product
 {
     private int _id;
@@ -9,11 +10,10 @@ public class Product
     private int _numberOfDays;
     private decimal _pricePerDay;
     private decimal _lateFee;
-    private bool isLateFee;
+    private bool _isPercent;
     private bool isPercent;
-    private DateTime _createdAt;
+    private DateTime? _createdAt;
     private DateTime? _updatedAt;
-    private bool _active;
 
     [Key]
     public int Id
@@ -46,19 +46,13 @@ public class Product
         set => _lateFee = value;
     }
 
-    public bool IsLateFee
-    {
-        get => isLateFee;
-        set => isLateFee = value;
-    }
-
     public bool IsPercent
     {
         get => isPercent;
         set => isPercent = value;
     }
 
-    public DateTime CreatedAt
+    public DateTime? CreatedAt
     {
         get => _createdAt;
         set => _createdAt = value;
@@ -69,10 +63,5 @@ public class Product
         get => _updatedAt;
         set => _updatedAt = value;
     }
-
-    public bool Active
-    {
-        get => _active;
-        set => _active = value;
-    }
+    
 }

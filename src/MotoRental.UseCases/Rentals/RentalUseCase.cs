@@ -23,10 +23,10 @@ public class RentalUseCase(IRentalRepository repository) : BaseUseCase<Rental>(r
         var date = DateTime.Now.AddDays(startedAtOneDay);
 
         ///TODO isto tem que vir como uma parametro de decisao
-        if (product.IsLateFee)
-        {
-            product.PricePerDay = product.IsPercent ? Multiply(product) : Sum(product);
-        }
+        // if (product.IsLateFee)
+        // {
+        //     product.PricePerDay = product.IsPercent ? Multiply(product) : Sum(product);
+        // }
         
         decimal totalPrice = product.NumberOfDays * product.PricePerDay;
         var endDate = date.AddDays(product.NumberOfDays);

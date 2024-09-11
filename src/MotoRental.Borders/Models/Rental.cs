@@ -2,6 +2,7 @@ using Dapper.Contrib.Extensions;
 
 namespace MotoRental.Borders.Models;
 
+[Table ("rental")]
 public class Rental
 {
     [Key]

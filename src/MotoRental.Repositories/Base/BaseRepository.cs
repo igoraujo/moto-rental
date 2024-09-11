@@ -1,5 +1,10 @@
+using System.Data;
+using System.Reflection;
+using Dapper;
 using Dapper.Contrib.Extensions;
 using Microsoft.Extensions.Configuration;
+using MotoRental.Borders.Helpers;
+using MotoRental.Repositories.Base.Queries;
 using Npgsql;
 
 namespace MotoRental.Repositories.Base;
@@ -12,7 +17,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     public BaseRepository(IConfiguration config)
     {
         _config = config;
-        _connectionString = _config["DbContextSettings:ConnectionString"];
+        _connectionString = _config["ConnectionStrings:PostgreSQL"];
     }
     
     public async Task<IEnumerable<T>?> FindAll()
@@ -33,25 +38,48 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
 
     public async Task<int> Save(T obj)
     {
+        string tableName = obj.GetType().Name.ToLower();
+        var parameters = obj.ConvertToLowercaseParameters();
+        var properties = typeof(T).GetProperties().Where(p => p.Name != "Id");
+        var columns = string.Join(", ", properties.Select(p => p.Name.ToLower()));
+        var values = string.Join(", ", properties.Select(p => $"@{p.Name.ToLower()}"));
+        string query = string.Format(BaseQuery.Insert, tableName, columns, values);
+        
         using (var connection = new NpgsqlConnection(_connectionString))
-        {
-            return await connection.InsertAsync(obj);
+        { 
+            return await connection.ExecuteAsync(query, parameters);
         }
     }
-
+    
     public async Task<bool> Update(T obj)
     {
-        using (var connection = new NpgsqlConnection(_connectionString))
+        const string keyColumn = "Id";
+        string tableName = obj.GetType().Name.ToLower();
+        
+        var parameters = obj.ConvertToLowercaseParameters();
+        var properties = typeof(T).GetProperties().Where(p => p.Name.ToLower() != keyColumn.ToLower());
+        
+        var setClause = string.Join(", ", properties.Select(p => $"{p.Name.ToLower()} = @{p.Name.ToLower()}"));
+        var whereClause = $"{keyColumn.ToLower()} = @{keyColumn.ToLower()}";
+        string query = string.Format(BaseQuery.Update, tableName, setClause, whereClause);
+
+        await using (var connection = new NpgsqlConnection(_connectionString))
         {
-            return await connection.UpdateAsync(obj);
+            var afectedLines = await connection.ExecuteAsync(query, parameters);
+            return afectedLines > 0;
         }
     }
 
     public async Task<bool> Delete(T obj)
     {
+        int id = obj.GetIdValue();
+        string tableName = obj.GetType().Name.ToLower();
+        string query = string.Format(BaseQuery.Delete, tableName, id);
+        
         using (var connection = new NpgsqlConnection(_connectionString))
         {
-            return await connection.DeleteAsync(obj);
+            var afectedLines = await connection.ExecuteAsync(query, id);
+            return afectedLines > 0;
         }
     }
 
@@ -203,18 +231,6 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     // }
 
     ///TODO Remover metodo duplicado
-    private int GetIdValue(T content)
-    {
-        var id = 0;
-        var type = content.GetType();
-        var property = type.GetProperty("Id");
-        if (!(property is null))
-        {
-            id = (int)property.GetValue(content);
-        }
-        return id;
-    }
-
     private T ReplaceContent(T content)
     {
         var type = content.GetType();

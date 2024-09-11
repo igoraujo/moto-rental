@@ -87,16 +87,14 @@
 <!-- page script -->
 <script>
     function Delete(id) {
-        var txt;
-        var r = confirm("Você tem certeza que deseja excluir esta motocicleta?");
-        if (r == true) {
-
+        let r = confirm("Você tem certeza que deseja excluir esta motocicleta?");
+        if (r) {
             $.ajax({
                 url: `@ViewBag.ControllerName/Delete/${id}`,
                 type: 'DELETE',
                 success: function (data) {
                     alert("Motocicleta excluída com sucesso!");
-                    location.reload();
+                    window.location.reload();
                 },
                 error: function (data) {
                     alert("Erro ao excluir motocicleta!");

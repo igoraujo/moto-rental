@@ -2,6 +2,7 @@ using Dapper.Contrib.Extensions;
 
 namespace MotoRental.Borders.Models;
 
+[Table ("deliveryPerson")]
 public class DeliveryPerson
 {
     private int _id;

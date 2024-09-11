@@ -4,6 +4,8 @@ namespace MotoRental.Borders.Models;
 ///<summary>
 ///Usuários
 ///</summary>
+
+[Table ("user")]
 public class User
 {
     private int _id;

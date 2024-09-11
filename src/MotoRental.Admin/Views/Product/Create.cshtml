@@ -1,0 +1,64 @@
+@model MotoRental.Borders.Models.Product
+
+@{
+    ViewBag.Title = "Produto";
+    Layout = "_Layout";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Cadastrar @ViewBag.Title</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="Description" class="col-sm-2 control-label">Descrição</label>
+                    <div class="col-sm-2">
+                        <input id="Description" type="text" class="form-control" name="Description" placeholder="Descrição do serviço">
+                    </div>
+
+                    <label for="NumberOfDays" class="col-sm-2 control-label">Quantidade de dias</label>
+                    <div class="col-sm-2">
+                        <input id="NumberOfDays" type="number" class="form-control" name="NumberOfDays" placeholder="30" maxlength="4">
+                    </div>
+
+                    <label for="PricePerDay" class="col-sm-2 control-label">Preço/dia</label>
+                    <div class="col-sm-2">
+                        <input id="PricePerDay" type="text" class="form-control" name="PricePerDay" placeholder="R$25">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="LateFee" class="col-sm-2 control-label">Multa</label>
+                    <div class="col-sm-2">
+                        <input id="LateFee" type="text" class="form-control" name="LateFee" placeholder="20">
+                    </div>
+
+                    <label for="checkIsPercent" class="col-sm-2 control-label">%</label>
+                    <div class="col-sm-2">
+                        <input id="checkIsPercent" type="checkbox" class="custom-control-input" name="checkIsPercent">
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-default" formaction="Cancel" formmethod="post">Voltar</button>
+                <button type="submit" class="btn btn-info pull-right" formaction="CreateProduct"
+                        formmethod="post">Cadastrar</button>
+            </div>
+            <!-- /.box-footer -->
+            @* <input type="hidden" id="IsPercent" name="IsPercent" /> *@
+        </form>
+    </div>
+    <!-- /.box -->
+</section>

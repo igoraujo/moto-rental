@@ -2,6 +2,7 @@ using Dapper.Contrib.Extensions;
 
 namespace MotoRental.Borders.Models;
 
+[Table ("admin")]
 public class Admins
 {
     private int _id;
